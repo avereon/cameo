@@ -55,8 +55,8 @@
 
 		<dependency>
 			<groupId>com.xeomar</groupId>
-			<artifactId>zevra</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<artifactId>xenon</artifactId>
+			<version>0.8-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
