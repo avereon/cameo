@@ -1,6 +1,6 @@
-package com.xeomar.cameo;
+package com.avereon.cameo;
 
-import com.xeomar.xenon.ProgramImage;
+import com.avereon.xenon.ProgramImage;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 

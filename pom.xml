@@ -5,19 +5,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.xeomar.pom</groupId>
+		<groupId>com.avereon.pom</groupId>
 		<artifactId>prg</artifactId>
 		<version>3.0.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
-	<groupId>com.xeomar</groupId>
+	<groupId>com.avereon</groupId>
 	<artifactId>cameo</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Cameo</name>
-	<description>A Java application to save Xeomar ProgramImage objects as image files.</description>
+	<description>A Java application to save Avereon ProgramImage objects as image files.</description>
 	<inceptionYear>2019</inceptionYear>
 
 	<developers>
@@ -32,15 +32,15 @@
 
 	<repositories>
 		<repository>
-			<id>xeo</id>
-			<url>https://repo.xeomar.com/xeo</url>
+			<id>avn</id>
+			<url>https://repo.avereon.com/avn</url>
 		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>xeo</id>
-			<url>https://repo.xeomar.com/xeo</url>
+			<id>avn</id>
+			<url>https://repo.avereon.com/avn</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -54,9 +54,9 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.xeomar</groupId>
+			<groupId>com.avereon</groupId>
 			<artifactId>xenon</artifactId>
-			<version>0.8-SNAPSHOT</version>
+			<version>[0.9-SNAPSHOT,)</version>
 		</dependency>
 
 		<dependency>
