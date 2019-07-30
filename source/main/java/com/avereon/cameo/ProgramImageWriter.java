@@ -15,20 +15,23 @@ import java.nio.file.Path;
 
 public class ProgramImageWriter {
 
-	public static void save( ProgramImage icon, Path folder, String file ) throws InterruptedException {
+	private Exception exception;
+
+	public void save( ProgramImage icon, Path folder, String file ) throws Exception {
 		save( icon, folder.resolve( file ) );
 	}
 
-	public static void save( ProgramImage icon, Path path ) throws InterruptedException {
+	public void save( ProgramImage icon, Path path ) throws Exception {
 		try {
 			Platform.runLater( () -> saveImage( icon, path ) );
 		} catch( IllegalStateException exception ) {
 			Platform.startup( () -> saveImage( icon, path ) );
 		}
 		FxUtil.fxWait( 5000 );
+		if( exception != null ) throw exception;
 	}
 
-	private static void saveImage( ProgramImage icon, Path path ) {
+	private void saveImage( ProgramImage icon, Path path ) {
 		File absoluteFile = path.toFile().getAbsoluteFile();
 		String type = FileUtil.getExtension( path );
 		if( TextUtil.isEmpty( type ) ) type = "png";
@@ -36,10 +39,8 @@ public class ProgramImageWriter {
 			BufferedImage buffer = new BufferedImage( (int)icon.getWidth(), (int)icon.getHeight(), BufferedImage.TYPE_INT_ARGB );
 			BufferedImage image = SwingFXUtils.fromFXImage( icon.getImage(), buffer );
 			ImageIO.write( image, type, absoluteFile );
-			System.out.println( "Image saved to: " + absoluteFile );
 		} catch( IOException exception ) {
-			System.err.println( "Unable to write image file: " + absoluteFile );
-			exception.printStackTrace( System.err );
+			this.exception = exception;
 		}
 	}
 

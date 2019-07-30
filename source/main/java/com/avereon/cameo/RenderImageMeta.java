@@ -1,28 +1,26 @@
 package com.avereon.cameo;
 
-import java.nio.file.Path;
-
 public class RenderImageMeta {
 
-	private String image;
+	private String imageClass;
 
-	private Path target;
+	private String target;
 
 	private String name;
 
-	public String getImage() {
-		return image;
+	public String getImageClass() {
+		return imageClass;
 	}
 
-	public void setImage( String image ) {
-		this.image = image;
+	public void setClass( String imageClass ) {
+		this.imageClass = imageClass;
 	}
 
-	public Path getTarget() {
+	public String getTarget() {
 		return target;
 	}
 
-	public void setTarget( Path target ) {
+	public void setTarget( String target ) {
 		this.target = target;
 	}
 

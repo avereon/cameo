@@ -11,8 +11,8 @@ public class Main {
 	public static void main( String[] commands ) {
 		Path downloads = Paths.get( System.getProperty( "user.home" ), "Downloads" );
 		try {
-			ProgramImageWriter.save( new WingDiscLargeIcon(), downloads, "avereon.png" );
-			ProgramImageWriter.save( new XRingLargeIcon(), downloads, "xenon.png" );
+			new ProgramImageWriter().save( new WingDiscLargeIcon(), downloads, "avereon.png" );
+			new ProgramImageWriter().save( new XRingLargeIcon(), downloads, "xenon.png" );
 
 			// Successful exit
 			System.exit( 0 );
