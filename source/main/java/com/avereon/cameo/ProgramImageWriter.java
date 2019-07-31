@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ProgramImageWriter {
@@ -32,10 +33,12 @@ public class ProgramImageWriter {
 	}
 
 	private void saveImage( ProgramImage icon, Path path ) {
-		File absoluteFile = path.toFile().getAbsoluteFile();
-		String type = FileUtil.getExtension( path );
-		if( TextUtil.isEmpty( type ) ) type = "png";
 		try {
+			Path parent = path.getParent();
+			if( !Files.exists( parent ) ) Files.createDirectories( parent );
+			File absoluteFile = path.toFile().getAbsoluteFile();
+			String type = FileUtil.getExtension( path );
+			if( TextUtil.isEmpty( type ) ) type = "png";
 			BufferedImage buffer = new BufferedImage( (int)icon.getWidth(), (int)icon.getHeight(), BufferedImage.TYPE_INT_ARGB );
 			BufferedImage image = SwingFXUtils.fromFXImage( icon.getImage(), buffer );
 			ImageIO.write( image, type, absoluteFile );
