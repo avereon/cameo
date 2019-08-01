@@ -9,7 +9,10 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,8 @@ public class RenderMojo extends AbstractMojo {
 	@Parameter( property = "icons" )
 	private IconMetadata[] icons;
 
+	private ClassLoader loader;
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		if( images == null ) {
@@ -33,53 +38,66 @@ public class RenderMojo extends AbstractMojo {
 			return;
 		}
 
-		Path output = project.getBasedir().toPath();
+		try {
+			// Create special class loader that includes the recently created classes
+			loader = new URLClassLoader( new URL[]{ new File( project.getBuild().getOutputDirectory() ).toURI().toURL() }, getClass().getClassLoader() );
 
-		// Go through the images and write files
-		for( ImageMetadata imageMetadata : images ) {
-			Path target = output.resolve( imageMetadata.getTarget() );
-			getLog().info( "Rendering image " + target.toAbsolutePath() );
+			Path output = project.getBasedir().toPath();
 
-			try {
-				new ProgramImageWriter().save( createRenderer( imageMetadata ), target );
-			} catch( Exception exception ) {
-				getLog().error( "Unable to render image " + imageMetadata.getImageClass(), exception );
-			}
-		}
+			// Go through the images and write files
+			for( ImageMetadata imageMetadata : images ) {
+				Path target = output.resolve( imageMetadata.getTarget() );
+				getLog().info( "Render " + target.toAbsolutePath() );
 
-		for( IconMetadata iconMetadata : icons ) {
-			Path target = output.resolve( iconMetadata.getTarget() );
-			getLog().info( "Rendering icon " + target.toAbsolutePath() );
-
-			// Create the renderers
-			List<ProgramImage> renderers = new ArrayList<>();
-			for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
 				try {
-					renderers.add( createRenderer( imageMetadata ));
+					new ProgramImageWriter().save( createRenderer( imageMetadata ), target );
 				} catch( Exception exception ) {
 					// Intentionally skip image
 				}
 			}
 
+			for( IconMetadata iconMetadata : icons ) {
+				Path target = output.resolve( iconMetadata.getTarget() );
+				getLog().info( "Render " + target.toAbsolutePath() );
 
-			try {
-				new ProgramImageWriter().save( renderers, target );
-			} catch( Exception exception ) {
-				getLog().error( "Unable to render icon ", exception );
+				// Create the renderers
+				List<ProgramImage> renderers = new ArrayList<>();
+				for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
+					try {
+						renderers.add( createRenderer( imageMetadata ) );
+					} catch( Exception exception ) {
+						// Intentionally skip image
+					}
+				}
+
+				try {
+					new ProgramImageWriter().save( renderers, target );
+				} catch( Exception exception ) {
+					getLog().error( "Unable to render icon ", exception );
+				}
 			}
+		} catch( Throwable throwable ) {
+			throw new MojoFailureException( throwable.getMessage(), throwable );
 		}
 	}
 
 	private ProgramImage createRenderer( ImageMetadata imageMetadata ) throws Exception {
-		Class<? extends ProgramImage> imageClass = (Class<? extends ProgramImage>)Class.forName( imageMetadata.getImageClass() );
-		Constructor<? extends ProgramImage> constructor = imageClass.getConstructor();
-		ProgramImage renderer = constructor.newInstance();
+		try {
+			Class<? extends ProgramImage> imageClass = (Class<? extends ProgramImage>)Class.forName( imageMetadata.getImageClass(), true, loader );
+			Constructor<? extends ProgramImage> constructor = imageClass.getConstructor();
+			ProgramImage renderer = constructor.newInstance();
 
-		if( imageMetadata.getSize() != null ) renderer.setSize(  imageMetadata.getSize() );
-		if( imageMetadata.getWidth() != null ) renderer.setWidth(  imageMetadata.getWidth() );
-		if( imageMetadata.getHeight() != null ) renderer.setHeight( imageMetadata.getHeight() );
-
-		return renderer;
+			if( imageMetadata.getSize() != null ) renderer.setSize( imageMetadata.getSize() );
+			if( imageMetadata.getWidth() != null ) renderer.setWidth( imageMetadata.getWidth() );
+			if( imageMetadata.getHeight() != null ) renderer.setHeight( imageMetadata.getHeight() );
+			return renderer;
+		} catch( ClassNotFoundException exception ) {
+			getLog().error( "Unable to load renderer: " + imageMetadata.getImageClass(), exception );
+			throw exception;
+		} catch( Exception exception ) {
+			getLog().error( exception );
+			throw exception;
+		}
 	}
 
 	public ImageMetadata[] getImages() {
