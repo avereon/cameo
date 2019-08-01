@@ -1,7 +1,7 @@
 package com.avereon.cameo;
 
 import com.avereon.util.FileUtil;
-import com.avereon.xenon.icon.WingDiscLargeIcon;
+import com.avereon.xenon.icon.BrokenIcon;
 import org.junit.Test;
 
 import java.nio.file.Files;
@@ -16,7 +16,7 @@ public class ProgramImageWriterTest {
 		Path tmp = FileUtil.createTempFolder( "", "" );
 		try {
 			Path icon = tmp.resolve( "icons/avereon.png" );
-			new ProgramImageWriter().save( new WingDiscLargeIcon(), icon );
+			new ProgramImageWriter().save( new BrokenIcon(), icon );
 			assertTrue( Files.exists( icon ) );
 		} finally {
 			FileUtil.delete( tmp );
@@ -28,7 +28,7 @@ public class ProgramImageWriterTest {
 		Path tmp = FileUtil.createTempFolder( "", "" );
 		try {
 			Path icon = tmp.resolve( "icons/avereon.ico" );
-			new ProgramImageWriter().save( new WingDiscLargeIcon(), icon );
+			new ProgramImageWriter().save( new BrokenIcon(), icon );
 			assertTrue( Files.exists( icon ) );
 		} finally {
 			FileUtil.delete( tmp );
