@@ -1,4 +1,4 @@
-package com.avereon.cameo;
+package com.avereon.cameo.maven;
 
 public class IconMetadata {
 
