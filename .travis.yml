@@ -5,7 +5,7 @@ cache:
     - $HOME/.m2
 
 install:
-  - sudo apt upgrade openjdk-11-jdk
+  - sudo apt install openjdk-11-jdk
   - sudo apt install xvfb
   - Xvfb :2 &
 
