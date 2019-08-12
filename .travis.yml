@@ -1,10 +1,10 @@
 language: java
-jdk: adoptopenjdk11
 cache:
   directories:
     - $HOME/.m2
 
 install:
+  - source ./install-jdk.sh --url 'https://api.adoptopenjdk.net/v2/binary/releases/openjdk11?openjdk_impl=hotspot&os=linux&arch=x64&release=latest&heap_size=normal&type=jdk'
   - sudo apt install xvfb
   - Xvfb :2 &
 
