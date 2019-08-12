@@ -1,11 +1,10 @@
 language: java
-jdk: openjdk11
+jdk: openjdk11.0.4
 cache:
   directories:
     - $HOME/.m2
 
 install:
-  - sudo apt install openjdk-11-jdk
   - sudo apt install xvfb
   - Xvfb :2 &
 
