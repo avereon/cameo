@@ -5,7 +5,7 @@ cache:
     - $HOME/.m2
 
 install:
-  - apt install xvfb
+  - sudo apt install xvfb
   - Xvfb :2
 
 deploy:
