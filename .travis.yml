@@ -13,6 +13,7 @@ before_install:
 
 install:
   - Xvfb :2 &
+  - export DISPLAY=:2
 
 deploy:
   provider: script
