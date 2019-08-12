@@ -4,6 +4,10 @@ cache:
   directories:
     - $HOME/.m2
 
+install:
+  - apt install xvfb
+  - Xvfb :2
+
 deploy:
   provider: script
   skip_cleanup: true
