@@ -6,7 +6,7 @@ cache:
 
 install:
   - sudo apt install xvfb
-  - Xvfb :2
+  - Xvfb :2 &
 
 deploy:
   provider: script
