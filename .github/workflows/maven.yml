@@ -16,4 +16,7 @@ jobs:
         env:
           AVN_REPO_USERNAME: ${{ secrets.AVN_REPO_USERNAME }}
           AVN_REPO_PASSWORD: ${{ secrets.AVN_REPO_PASSWORD }}
-        run: mvn deploy -B -U -V --settings .github/settings.xml --file pom.xml
+        run: |
+          Xvfb :99 &
+          export DISPLAY=:99
+          mvn deploy -B -U -V --settings .github/settings.xml --file pom.xml
