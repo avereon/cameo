@@ -1,7 +1,7 @@
 package com.avereon.cameo;
 
-import com.avereon.xenon.ProgramIcon;
-import com.avereon.xenon.icon.BrokenIcon;
+import com.avereon.venza.image.ProgramIcon;
+import com.avereon.rossa.icon.BrokenIcon;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;

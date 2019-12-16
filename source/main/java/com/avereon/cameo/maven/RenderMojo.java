@@ -1,7 +1,7 @@
 package com.avereon.cameo.maven;
 
 import com.avereon.cameo.ProgramImageWriter;
-import com.avereon.xenon.ProgramImage;
+import com.avereon.venza.image.ProgramImage;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;

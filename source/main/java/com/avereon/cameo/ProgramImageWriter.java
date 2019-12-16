@@ -2,8 +2,8 @@ package com.avereon.cameo;
 
 import com.avereon.util.FileUtil;
 import com.avereon.util.TextUtil;
-import com.avereon.xenon.ProgramImage;
-import com.avereon.xenon.util.FxUtil;
+import com.avereon.venza.image.ProgramImage;
+import com.avereon.venza.javafx.FxUtil;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import net.sf.image4j.codec.ico.ICOEncoder;
