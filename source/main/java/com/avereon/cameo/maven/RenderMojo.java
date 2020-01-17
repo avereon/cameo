@@ -33,24 +33,6 @@ public class RenderMojo extends AbstractMojo {
 
 	private ClassLoader loader;
 
-	//	java.lang.NullPointerException
-	//	at java.util.Objects.requireNonNull (Objects.java:222)
-	//	at java.util.ImmutableCollections$List12.<init> (ImmutableCollections.java:392)
-	//	at java.util.List.of (List.java:808)
-	//	at com.avereon.cameo.ProgramImageWriter.save (ProgramImageWriter.java:41)
-	//	at com.avereon.cameo.maven.RenderMojo.renderImages (RenderMojo.java:81)
-	//	at com.avereon.cameo.maven.RenderMojo.execute (RenderMojo.java:44)
-	//	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
-	//	at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:210)
-	//	at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:156)
-	//	at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:148)
-	//	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
-	//	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:81)
-	//	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:56)
-	//	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:128)
-	//	at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:305)
-	//	at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:192)
-
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		if( images == null && icons == null ) throw new MojoExecutionException( "No images or icons to render" );
@@ -72,17 +54,13 @@ public class RenderMojo extends AbstractMojo {
 			Path target = output.resolve( iconMetadata.getTarget() );
 			getLog().info( "Render icon " + target.toAbsolutePath() );
 
-//			try {
-				// Create the renderers
-				List<ProgramImage> renderers = new ArrayList<>();
-				for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
-					renderers.add( createRenderer( imageMetadata ) );
-				}
+			// Create the renderers
+			List<ProgramImage> renderers = new ArrayList<>();
+			for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
+				renderers.add( createRenderer( imageMetadata ) );
+			}
 
-				new ProgramImageWriter().save( renderers, target );
-//			} catch( Throwable throwable ) {
-//				getLog().error( "Unable to render icon: " + iconMetadata.getTarget(), throwable );
-//			}
+			new ProgramImageWriter().save( renderers, target );
 		}
 	}
 
@@ -91,17 +69,12 @@ public class RenderMojo extends AbstractMojo {
 			Path target = output.resolve( imageMetadata.getTarget() );
 			getLog().info( "Render image " + target.toAbsolutePath() );
 
-//			try {
-				ProgramImage renderer = createRenderer( imageMetadata );
-				double width = renderer.getWidth();
-				double height = renderer.getHeight();
-				if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
-				if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
-				new ProgramImageWriter().save( renderer, target, width, height );
-//			} catch( Throwable throwable ) {
-//				getLog().error( "Unable to render image: " + imageMetadata.getTarget(), throwable );
-//				throw throwable;
-//			}
+			ProgramImage renderer = createRenderer( imageMetadata );
+			double width = renderer.getWidth();
+			double height = renderer.getHeight();
+			if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
+			if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
+			new ProgramImageWriter().save( renderer, target, width, height );
 		}
 	}
 

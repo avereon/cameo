@@ -20,8 +20,6 @@ public class ProgramImageWriter {
 
 	private BufferedImage image;
 
-	private Exception exception;
-
 	public void save( ProgramImage renderer, Path path ) throws Exception {
 		save( List.of( renderer ), path );
 	}
@@ -45,14 +43,12 @@ public class ProgramImageWriter {
 	public void save( List<ProgramImage> renderers, Path path ) throws Exception {
 		List<BufferedImage> images = new ArrayList<>();
 		for( ProgramImage renderer : renderers ) {
-			images.add( doCreateImage( renderer ));
+			images.add( doCreateImage( renderer ) );
 		}
 		saveImage( images, path );
 	}
 
 	void saveImage( List<BufferedImage> images, Path path ) throws Exception {
-		if( exception != null ) throw exception;
-
 		Path parent = path.getParent();
 		if( !Files.exists( parent ) ) Files.createDirectories( parent );
 		File absoluteFile = path.toFile().getAbsoluteFile();
@@ -71,17 +67,14 @@ public class ProgramImageWriter {
 	}
 
 	private BufferedImage doCreateImage( ProgramImage image, double width, double height ) throws Exception {
-//		try {
-			Runnable createImage = () -> doCreateImageFx( image, width, height );
-			try {
-				Platform.runLater( createImage );
-			} catch( IllegalStateException exception ) {
-				Platform.startup( createImage );
-			}
-			FxUtil.fxWait( 1000 );
-//		} catch( Exception exception ) {
-//			if( this.exception != null ) this.exception = exception;
-//		}
+		Runnable createImage = () -> doCreateImageFx( image, width, height );
+		try {
+			Platform.runLater( createImage );
+		} catch( IllegalStateException exception ) {
+			Platform.startup( createImage );
+		}
+		FxUtil.fxWait( 1000 );
+		if( this.image == null )throw new NullPointerException( "Image not created" );
 		return this.image;
 	}
 
