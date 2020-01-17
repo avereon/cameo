@@ -53,7 +53,7 @@ public class RenderMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		if( images == null && icons == null ) throw new MojoFailureException( "No images or icons to render" );
+		if( images == null && icons == null ) throw new MojoExecutionException( "No images or icons to render" );
 
 		try {
 			// Create special class loader that includes the recently created classes
@@ -63,14 +63,14 @@ public class RenderMojo extends AbstractMojo {
 			renderImages( targetFolder );
 			renderIcons( targetFolder );
 		} catch( Throwable throwable ) {
-			throw new MojoExecutionException( throwable.getMessage(), throwable );
+			throw new MojoFailureException( throwable.getMessage(), throwable );
 		}
 	}
 
 	private void renderIcons( Path output ) {
 		for( IconMetadata iconMetadata : icons ) {
 			Path target = output.resolve( iconMetadata.getTarget() );
-			getLog().info( "Render " + target.toAbsolutePath() );
+			getLog().info( "Render icon " + target.toAbsolutePath() );
 
 			try {
 				// Create the renderers
@@ -80,8 +80,8 @@ public class RenderMojo extends AbstractMojo {
 				}
 
 				new ProgramImageWriter().save( renderers, target );
-			} catch( Exception exception ) {
-				getLog().error( "Unable to render icon", exception );
+			} catch( Throwable throwable ) {
+				getLog().error( "Unable to render icon: " + iconMetadata.getTarget(), throwable );
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class RenderMojo extends AbstractMojo {
 	private void renderImages( Path output ) {
 		for( ImageMetadata imageMetadata : images ) {
 			Path target = output.resolve( imageMetadata.getTarget() );
-			getLog().info( "Render " + target.toAbsolutePath() );
+			getLog().info( "Render image " + target.toAbsolutePath() );
 
 			try {
 				ProgramImage renderer = createRenderer( imageMetadata );
@@ -97,9 +97,9 @@ public class RenderMojo extends AbstractMojo {
 				double height = renderer.getHeight();
 				if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
 				if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
-				new ProgramImageWriter().save( createRenderer( imageMetadata ), target, width, height );
-			} catch( Exception exception ) {
-				getLog().error( "Unable to render image", exception );
+				new ProgramImageWriter().save( renderer, target, width, height );
+			} catch( Throwable throwable ) {
+				getLog().error( "Unable to render image: " + imageMetadata.getTarget(), throwable );
 			}
 		}
 	}
@@ -123,9 +123,6 @@ public class RenderMojo extends AbstractMojo {
 			return renderer;
 		} catch( ClassNotFoundException exception ) {
 			getLog().error( "Unable to load renderer: " + imageMetadata.getImageClass(), exception );
-			throw exception;
-		} catch( Exception exception ) {
-			getLog().error( exception );
 			throw exception;
 		}
 	}

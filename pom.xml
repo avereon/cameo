@@ -6,7 +6,7 @@
 
 	<parent>
 		<groupId>com.avereon.pom</groupId>
-		<artifactId>prg</artifactId>
+		<artifactId>jar</artifactId>
 		<version>3.0.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
@@ -47,8 +47,8 @@
 	<properties>
 		<!-- Runtime dependencies -->
 		<!--java.version defined in parent pom -->
-		<javafx.version>13-ea+9</javafx.version>
-		<slf4j.version>1.8.0-beta2</slf4j.version>
+		<javafx.version>13</javafx.version>
+		<slf4j.version>1.8.0-beta4</slf4j.version>
 	</properties>
 
 	<dependencies>

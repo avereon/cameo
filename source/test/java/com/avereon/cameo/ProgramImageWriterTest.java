@@ -16,17 +16,17 @@ public class ProgramImageWriterTest {
 	private Path targetFolder = Paths.get( "target", "images" );
 
 	@Test
-	public void testSavePng() throws Exception {
+	void testSavePng() throws Exception {
 		runTest( "testicon.png", ( path ) -> new ProgramImageWriter().save( new BrokenIcon(), path ) );
 	}
 
 	@Test
-	public void testSaveIco() throws Exception {
+	void testSaveIco() throws Exception {
 		runTest( "testicon.ico", ( path ) -> new ProgramImageWriter().save( new BrokenIcon(), path ) );
 	}
 
 	@Test
-	public void testSavePngWithOffset() throws Exception {
+	void testSavePngWithOffset() throws Exception {
 		runTest( "testiconoffset.png", ( path ) -> {
 			ProgramIcon icon = new BrokenIcon();
 			double size = icon.getSize();
