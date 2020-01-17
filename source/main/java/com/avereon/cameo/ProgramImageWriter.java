@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProgramImageWriter {
 
@@ -43,7 +43,11 @@ public class ProgramImageWriter {
 	}
 
 	public void save( List<ProgramImage> renderers, Path path ) throws Exception {
-		saveImage( renderers.stream().map( this::doCreateImage ).collect( Collectors.toList() ), path );
+		List<BufferedImage> images = new ArrayList<>();
+		for( ProgramImage renderer : renderers ) {
+			images.add( doCreateImage( renderer ));
+		}
+		saveImage( images, path );
 	}
 
 	void saveImage( List<BufferedImage> images, Path path ) throws Exception {
@@ -62,12 +66,12 @@ public class ProgramImageWriter {
 		}
 	}
 
-	private BufferedImage doCreateImage( ProgramImage image ) {
+	private BufferedImage doCreateImage( ProgramImage image ) throws Exception {
 		return doCreateImage( image, image.getWidth(), image.getHeight() );
 	}
 
-	private BufferedImage doCreateImage( ProgramImage image, double width, double height ) {
-		try {
+	private BufferedImage doCreateImage( ProgramImage image, double width, double height ) throws Exception {
+//		try {
 			Runnable createImage = () -> doCreateImageFx( image, width, height );
 			try {
 				Platform.runLater( createImage );
@@ -75,9 +79,9 @@ public class ProgramImageWriter {
 				Platform.startup( createImage );
 			}
 			FxUtil.fxWait( 1000 );
-		} catch( Exception exception ) {
-			if( this.exception != null ) this.exception = exception;
-		}
+//		} catch( Exception exception ) {
+//			if( this.exception != null ) this.exception = exception;
+//		}
 		return this.image;
 	}
 
