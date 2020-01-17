@@ -3,6 +3,7 @@ package com.avereon.cameo.maven;
 import com.avereon.cameo.ProgramImageWriter;
 import com.avereon.venza.image.ProgramImage;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -32,8 +33,26 @@ public class RenderMojo extends AbstractMojo {
 
 	private ClassLoader loader;
 
+	//	java.lang.NullPointerException
+	//	at java.util.Objects.requireNonNull (Objects.java:222)
+	//	at java.util.ImmutableCollections$List12.<init> (ImmutableCollections.java:392)
+	//	at java.util.List.of (List.java:808)
+	//	at com.avereon.cameo.ProgramImageWriter.save (ProgramImageWriter.java:41)
+	//	at com.avereon.cameo.maven.RenderMojo.renderImages (RenderMojo.java:81)
+	//	at com.avereon.cameo.maven.RenderMojo.execute (RenderMojo.java:44)
+	//	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
+	//	at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:210)
+	//	at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:156)
+	//	at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:148)
+	//	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
+	//	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:81)
+	//	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:56)
+	//	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:128)
+	//	at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:305)
+	//	at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:192)
+
 	@Override
-	public void execute() throws MojoFailureException {
+	public void execute() throws MojoExecutionException, MojoFailureException {
 		if( images == null && icons == null ) throw new MojoFailureException( "No images or icons to render" );
 
 		try {
@@ -44,7 +63,7 @@ public class RenderMojo extends AbstractMojo {
 			renderImages( targetFolder );
 			renderIcons( targetFolder );
 		} catch( Throwable throwable ) {
-			throw new MojoFailureException( throwable.getMessage(), throwable );
+			throw new MojoExecutionException( throwable.getMessage(), throwable );
 		}
 	}
 
