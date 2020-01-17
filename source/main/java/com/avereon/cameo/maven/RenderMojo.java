@@ -62,7 +62,7 @@ public class RenderMojo extends AbstractMojo {
 
 				new ProgramImageWriter().save( renderers, target );
 			} catch( Exception exception ) {
-				getLog().error( "Unable to render icon ", exception );
+				getLog().error( "Unable to render icon", exception );
 			}
 		}
 	}
@@ -80,7 +80,7 @@ public class RenderMojo extends AbstractMojo {
 				if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
 				new ProgramImageWriter().save( createRenderer( imageMetadata ), target, width, height );
 			} catch( Exception exception ) {
-				// Intentionally skip image
+				getLog().error( "Unable to render image", exception );
 			}
 		}
 	}
