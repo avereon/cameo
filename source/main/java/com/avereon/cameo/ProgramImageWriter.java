@@ -74,8 +74,6 @@ public class ProgramImageWriter {
 				Platform.startup( createImage );
 			}
 			FxUtil.fxWait( 1000 );
-		} catch( InterruptedException exception ) {
-			// Intentionally ignore exception
 		} catch( Exception exception ) {
 			if( this.exception != null ) this.exception = exception;
 		}
