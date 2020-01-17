@@ -57,11 +57,7 @@ public class RenderMojo extends AbstractMojo {
 				// Create the renderers
 				List<ProgramImage> renderers = new ArrayList<>();
 				for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
-					try {
-						renderers.add( createRenderer( imageMetadata ) );
-					} catch( Exception exception ) {
-						// Intentionally skip image
-					}
+					renderers.add( createRenderer( imageMetadata ) );
 				}
 
 				new ProgramImageWriter().save( renderers, target );
