@@ -38,7 +38,8 @@ public class ProgramImageWriter {
 	 * @throws Exception
 	 */
 	public void save( ProgramImage renderer, Path path, double width, double height ) throws Exception {
-		saveImage( List.of( doCreateImage( renderer, width, height ) ), path );
+		BufferedImage image = doCreateImage( renderer, width, height );
+		saveImage( image == null ? List.of() : List.of( image ), path );
 	}
 
 	public void save( List<ProgramImage> renderers, Path path ) throws Exception {

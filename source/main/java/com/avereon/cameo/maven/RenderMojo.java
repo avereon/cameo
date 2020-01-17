@@ -67,12 +67,12 @@ public class RenderMojo extends AbstractMojo {
 		}
 	}
 
-	private void renderIcons( Path output ) {
+	private void renderIcons( Path output ) throws Exception {
 		for( IconMetadata iconMetadata : icons ) {
 			Path target = output.resolve( iconMetadata.getTarget() );
 			getLog().info( "Render icon " + target.toAbsolutePath() );
 
-			try {
+//			try {
 				// Create the renderers
 				List<ProgramImage> renderers = new ArrayList<>();
 				for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
@@ -80,27 +80,28 @@ public class RenderMojo extends AbstractMojo {
 				}
 
 				new ProgramImageWriter().save( renderers, target );
-			} catch( Throwable throwable ) {
-				getLog().error( "Unable to render icon: " + iconMetadata.getTarget(), throwable );
-			}
+//			} catch( Throwable throwable ) {
+//				getLog().error( "Unable to render icon: " + iconMetadata.getTarget(), throwable );
+//			}
 		}
 	}
 
-	private void renderImages( Path output ) {
+	private void renderImages( Path output ) throws Exception {
 		for( ImageMetadata imageMetadata : images ) {
 			Path target = output.resolve( imageMetadata.getTarget() );
 			getLog().info( "Render image " + target.toAbsolutePath() );
 
-			try {
+//			try {
 				ProgramImage renderer = createRenderer( imageMetadata );
 				double width = renderer.getWidth();
 				double height = renderer.getHeight();
 				if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
 				if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
 				new ProgramImageWriter().save( renderer, target, width, height );
-			} catch( Throwable throwable ) {
-				getLog().error( "Unable to render image: " + imageMetadata.getTarget(), throwable );
-			}
+//			} catch( Throwable throwable ) {
+//				getLog().error( "Unable to render image: " + imageMetadata.getTarget(), throwable );
+//				throw throwable;
+//			}
 		}
 	}
 
