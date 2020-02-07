@@ -55,13 +55,13 @@
 
 		<dependency>
 			<groupId>com.avereon</groupId>
-			<artifactId>rossa</artifactId>
+			<artifactId>venza</artifactId>
 			<version>[0.1-SNAPSHOT,)</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.avereon</groupId>
-			<artifactId>venza</artifactId>
+			<artifactId>rossa</artifactId>
 			<version>[0.1-SNAPSHOT,)</version>
 		</dependency>
 
@@ -96,12 +96,6 @@
 			<artifactId>maven-plugin-annotations</artifactId>
 			<version>3.4</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 
 	</dependencies>

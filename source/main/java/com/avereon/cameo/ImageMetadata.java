@@ -1,4 +1,4 @@
-package com.avereon.cameo.maven;
+package com.avereon.cameo;
 
 public class ImageMetadata {
 
