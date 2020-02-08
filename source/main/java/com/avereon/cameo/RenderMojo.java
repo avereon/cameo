@@ -43,6 +43,7 @@ public class RenderMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		if( images == null && icons == null ) throw new MojoExecutionException( "No images or icons to render" );
 
+		// Sort the artifacts
 		Set<Artifact> artifacts = project.getArtifacts();
 		List<URL> urls = artifacts.stream().map( a -> {
 			try {
@@ -53,7 +54,7 @@ public class RenderMojo extends AbstractMojo {
 		} ).filter( Objects::nonNull ).collect( Collectors.toList() );
 
 		try {
-			urls.add( new File( project.getBuild().getOutputDirectory() ).toURI().toURL() );
+			urls.add( 0, new File( project.getBuild().getOutputDirectory() ).toURI().toURL() );
 			urls.forEach( u -> getLog().debug( "url=" + u ) );
 
 			// Create special class loader that includes the recently created classes
