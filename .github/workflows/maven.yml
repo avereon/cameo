@@ -1,4 +1,4 @@
-name: Avereon Cameo CI
+name: Avereon Cameo Continuous
 
 on: [push]
 
