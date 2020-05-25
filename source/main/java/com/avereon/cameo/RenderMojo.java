@@ -1,7 +1,7 @@
 package com.avereon.cameo;
 
-import com.avereon.venza.image.ProgramImage;
-import com.avereon.venza.image.ProgramImageWriter;
+import com.avereon.venza.image.RenderedImage;
+import com.avereon.venza.image.RenderedImageWriter;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -59,12 +59,12 @@ public class RenderMojo extends AbstractMojo {
 			getLog().info( "Render icon " + target.toAbsolutePath() );
 
 			// Create the renderers
-			List<ProgramImage> renderers = new ArrayList<>();
+			List<RenderedImage> renderers = new ArrayList<>();
 			for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
 				renderers.add( createRenderer( imageMetadata ) );
 			}
 
-			new ProgramImageWriter().save( renderers, target );
+			new RenderedImageWriter().save( renderers, target );
 		}
 	}
 
@@ -74,22 +74,22 @@ public class RenderMojo extends AbstractMojo {
 			Path target = output.resolve( imageMetadata.getTarget() );
 			getLog().info( "Render image " + target.toAbsolutePath() );
 
-			ProgramImage renderer = createRenderer( imageMetadata );
+			RenderedImage renderer = createRenderer( imageMetadata );
 			double width = renderer.getWidth();
 			double height = renderer.getHeight();
 			if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
 			if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
-			new ProgramImageWriter().save( renderer, target, width, height );
+			new RenderedImageWriter().save( renderer, target, width, height );
 		}
 	}
 
-	private ProgramImage createRenderer( ImageMetadata imageMetadata ) throws Exception {
+	private RenderedImage createRenderer( ImageMetadata imageMetadata ) throws Exception {
 		try {
-			Class<? extends ProgramImage> imageClass = getImageClass( imageMetadata.getImageClass() );
-			Constructor<? extends ProgramImage> constructor = imageClass.getConstructor();
-			ProgramImage renderer = constructor.newInstance();
+			Class<? extends RenderedImage> imageClass = getImageClass( imageMetadata.getImageClass() );
+			Constructor<? extends RenderedImage> constructor = imageClass.getConstructor();
+			RenderedImage renderer = constructor.newInstance();
 
-			if( imageMetadata.getSize() != null ) renderer.setSize( imageMetadata.getSize() );
+			if( imageMetadata.getSize() != null ) renderer.resize( imageMetadata.getSize() );
 			if( imageMetadata.getWidth() != null ) renderer.setWidth( imageMetadata.getWidth() );
 			if( imageMetadata.getHeight() != null ) renderer.setHeight( imageMetadata.getHeight() );
 
@@ -107,8 +107,8 @@ public class RenderMojo extends AbstractMojo {
 	}
 
 	@SuppressWarnings( "unchecked" )
-	private Class<? extends ProgramImage> getImageClass( String className ) throws ClassNotFoundException {
-		return (Class<? extends ProgramImage>)Class.forName( className, true, loader );
+	private Class<? extends RenderedImage> getImageClass( String className ) throws ClassNotFoundException {
+		return (Class<? extends RenderedImage>)Class.forName( className, true, loader );
 	}
 
 	public MavenProject getProject() {
