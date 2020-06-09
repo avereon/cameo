@@ -6,6 +6,8 @@ public class IconMetadata {
 
 	private String target;
 
+	private String theme;
+
 	public ImageMetadata[] getImages() {
 		return images;
 	}
@@ -20,6 +22,14 @@ public class IconMetadata {
 
 	public void setTarget( String target ) {
 		this.target = target;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme( String theme ) {
+		this.theme = theme;
 	}
 
 }

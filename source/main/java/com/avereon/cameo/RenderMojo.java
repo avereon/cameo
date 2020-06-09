@@ -61,6 +61,7 @@ public class RenderMojo extends AbstractMojo {
 			// Create the renderers
 			List<RenderedImage> renderers = new ArrayList<>();
 			for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
+				if( imageMetadata.getTheme() == null ) imageMetadata.setTheme( iconMetadata.getTheme() );
 				renderers.add( createRenderer( imageMetadata ) );
 			}
 
@@ -98,6 +99,8 @@ public class RenderMojo extends AbstractMojo {
 			if( imageMetadata.getOffsetX() != null ) offsetX = imageMetadata.getOffsetX();
 			if( imageMetadata.getOffsetY() != null ) offsetY = imageMetadata.getOffsetY();
 			renderer.relocate( offsetX, offsetY );
+
+			if( imageMetadata.getTheme() != null ) renderer.getProperties().put( "stylesheet", imageMetadata.getTheme() );
 
 			return renderer;
 		} catch( ClassNotFoundException exception ) {
