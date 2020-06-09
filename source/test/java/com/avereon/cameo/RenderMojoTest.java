@@ -38,8 +38,8 @@ public class RenderMojoTest {
 	void testPngImage() throws Exception {
 		ImageMetadata imageMetadata = new ImageMetadata();
 		imageMetadata.setClass( BrokenIcon.class.getName() );
-		imageMetadata.setSize( 256 );
 		imageMetadata.setTarget( "target/images/broken.png" );
+		imageMetadata.setSize( 256 );
 		mojo.setImages( new ImageMetadata[]{ imageMetadata } );
 
 		mojo.execute();

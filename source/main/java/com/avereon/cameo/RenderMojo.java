@@ -31,7 +31,7 @@ public class RenderMojo extends AbstractMojo {
 	@Parameter( property = "icons" )
 	private IconMetadata[] icons;
 
-	private ClassLoader loader;
+	ClassLoader loader;
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -39,7 +39,7 @@ public class RenderMojo extends AbstractMojo {
 
 		try {
 			List<URL> urls = List.of( new File( project.getBuild().getOutputDirectory() ).toURI().toURL() );
-			urls.forEach( u -> getLog().info( "url=" + u ) );
+			//urls.forEach( u -> getLog().info( "url=" + u ) );
 
 			// Create special class loader that includes the recently created classes
 			loader = new URLClassLoader( urls.toArray( new URL[ 0 ] ), getClass().getClassLoader() );
@@ -65,7 +65,7 @@ public class RenderMojo extends AbstractMojo {
 				renderers.add( createRenderer( imageMetadata ) );
 			}
 
-			new RenderedImageWriter().save( renderers, target );
+			createWriter().save( renderers, target );
 		}
 	}
 
@@ -80,8 +80,14 @@ public class RenderMojo extends AbstractMojo {
 			double height = renderer.getHeight();
 			if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
 			if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
-			new RenderedImageWriter().save( renderer, target, width, height );
+			createWriter().save( renderer, target, width, height );
 		}
+	}
+
+	@SuppressWarnings( "unchecked" )
+	private RenderedImageWriter createWriter() throws Exception {
+		Class<? extends RenderedImageWriter> writerClass = (Class<? extends RenderedImageWriter>)Class.forName( RenderedImageWriter.class.getName(), true, loader );
+		return writerClass.getConstructor().newInstance();
 	}
 
 	private RenderedImage createRenderer( ImageMetadata imageMetadata ) throws Exception {
