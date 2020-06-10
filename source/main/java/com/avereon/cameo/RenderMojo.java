@@ -108,9 +108,7 @@ public class RenderMojo extends AbstractMojo {
 			if( imageMetadata.getOffsetY() != null ) offsetY = imageMetadata.getOffsetY();
 			renderer.relocate( offsetX, offsetY );
 
-			if( imageMetadata.getTheme() != null ) {
-				((RenderedIcon)renderer).setTheme( themes.get( imageMetadata.getTheme().toLowerCase() ) );
-			}
+			if( imageMetadata.getTheme() != null ) renderer.setTheme( themes.get( imageMetadata.getTheme().toLowerCase() ) );
 
 			return renderer;
 		} catch( ClassNotFoundException exception ) {
