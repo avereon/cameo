@@ -1,5 +1,6 @@
 package com.avereon.cameo;
 
+import com.avereon.venza.icon.RenderedIcon;
 import com.avereon.venza.image.RenderedImage;
 import com.avereon.venza.image.RenderedImageWriter;
 import org.apache.maven.plugin.AbstractMojo;
@@ -17,10 +18,13 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings( "unused" )
 @Mojo( name = "render", defaultPhase = LifecyclePhase.PREPARE_PACKAGE )
 public class RenderMojo extends AbstractMojo {
+
+	private static final Map<String, String> themes;
 
 	@Parameter( readonly = true, defaultValue = "${project}" )
 	private MavenProject project;
@@ -32,6 +36,10 @@ public class RenderMojo extends AbstractMojo {
 	private IconMetadata[] icons;
 
 	ClassLoader loader;
+
+	static {
+		themes = Map.of( "dark", RenderedIcon.DARK_THEME, "light", RenderedIcon.LIGHT_THEME );
+	}
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -100,7 +108,9 @@ public class RenderMojo extends AbstractMojo {
 			if( imageMetadata.getOffsetY() != null ) offsetY = imageMetadata.getOffsetY();
 			renderer.relocate( offsetX, offsetY );
 
-			if( imageMetadata.getTheme() != null ) renderer.getProperties().put( "stylesheet", imageMetadata.getTheme() );
+			if( imageMetadata.getTheme() != null ) {
+				((RenderedIcon)renderer).setTheme( themes.get( imageMetadata.getTheme().toLowerCase() ) );
+			}
 
 			return renderer;
 		} catch( ClassNotFoundException exception ) {
