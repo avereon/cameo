@@ -69,7 +69,7 @@ public class RenderMojo extends AbstractMojo {
 			// Create the renderers
 			List<RenderedImage> renderers = new ArrayList<>();
 			for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
-				if( imageMetadata.getTheme() == null ) imageMetadata.setTheme( iconMetadata.getTheme() );
+				if( iconMetadata.getTheme() != null ) imageMetadata.setTheme( iconMetadata.getTheme() );
 				renderers.add( createRenderer( imageMetadata ) );
 			}
 
@@ -108,7 +108,9 @@ public class RenderMojo extends AbstractMojo {
 			if( imageMetadata.getOffsetY() != null ) offsetY = imageMetadata.getOffsetY();
 			renderer.relocate( offsetX, offsetY );
 
-			if( imageMetadata.getTheme() != null ) renderer.setTheme( themes.get( imageMetadata.getTheme().toLowerCase() ) );
+			String theme = imageMetadata.getTheme();
+			if( theme == null ) theme = "dark";
+			renderer.setTheme( themes.get( theme.toLowerCase() ) );
 
 			return renderer;
 		} catch( ClassNotFoundException exception ) {

@@ -1,6 +1,5 @@
 package com.avereon.cameo;
 
-import com.avereon.venza.icon.BrokenIcon;
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -35,31 +34,40 @@ public class RenderMojoTest {
 	}
 
 	@Test
-	void testPngImage() throws Exception {
+	void testGifImage() throws Exception {
 		ImageMetadata imageMetadata = new ImageMetadata();
-		imageMetadata.setClass( BrokenIcon.class.getName() );
-		imageMetadata.setTarget( "target/images/broken.png" );
+		imageMetadata.setClass( TestIcon.class.getName() );
+		imageMetadata.setTarget( "target/images/bolt.gif" );
 		imageMetadata.setSize( 256 );
 		mojo.setImages( new ImageMetadata[]{ imageMetadata } );
 
 		mojo.execute();
 
-		assertTrue( new File( "target/images/broken.png" ).exists() );
+		assertTrue( new File( "target/images/bolt.gif" ).exists() );
 	}
 
 	@Test
 	void testPngIcon() throws Exception {
 		ImageMetadata imageMetadata = new ImageMetadata();
-		imageMetadata.setClass( BrokenIcon.class.getName() );
+		imageMetadata.setClass( TestIcon.class.getName() );
 		imageMetadata.setSize( 64 );
 		IconMetadata iconMetadata = new IconMetadata();
 		iconMetadata.setImages( new ImageMetadata[]{ imageMetadata } );
-		iconMetadata.setTarget( "target/icons/broken.png" );
+		iconMetadata.setTarget( "target/icons/bolt.png" );
 		mojo.setIcons( new IconMetadata[]{ iconMetadata } );
 
 		mojo.execute();
+		assertTrue( new File( "target/icons/bolt.png" ).exists() );
 
-		assertTrue( new File( "target/icons/broken.png" ).exists() );
+		iconMetadata.setTarget( "target/icons/bolt-dark.png" );
+		iconMetadata.setTheme( "dark" );
+		mojo.execute();
+		assertTrue( new File( "target/icons/bolt-dark.png" ).exists() );
+
+		iconMetadata.setTarget( "target/icons/bolt-light.png" );
+		iconMetadata.setTheme( "light" );
+		mojo.execute();
+		assertTrue( new File( "target/icons/bolt-light.png" ).exists() );
 	}
 
 	@Test
@@ -67,18 +75,18 @@ public class RenderMojoTest {
 		List<ImageMetadata> icons = new ArrayList<>();
 		for( int exp = 8; exp >= 4; exp--) {
 			ImageMetadata imageMetadata = new ImageMetadata();
-			imageMetadata.setClass( BrokenIcon.class.getName() );
+			imageMetadata.setClass( TestIcon.class.getName() );
 			imageMetadata.setSize( (int)Math.pow( 2, exp) );
 			icons.add( imageMetadata );
 		}
 		IconMetadata iconMetadata = new IconMetadata();
 		iconMetadata.setImages( icons.toArray( new ImageMetadata[0] ) );
-		iconMetadata.setTarget( "target/icons/broken.ico" );
+		iconMetadata.setTarget( "target/icons/bolt.ico" );
 		mojo.setIcons( new IconMetadata[]{ iconMetadata } );
 
 		mojo.execute();
 
-		assertTrue( new File( "target/icons/broken.ico" ).exists() );
+		assertTrue( new File( "target/icons/bolt.ico" ).exists() );
 	}
 
 	@Test
