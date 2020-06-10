@@ -65,7 +65,7 @@ public class RenderMojo extends AbstractMojo {
 				renderers.add( createRenderer( imageMetadata ) );
 			}
 
-			createWriter().save( renderers, target );
+			new RenderedImageWriter().save( renderers, target );
 		}
 	}
 
@@ -80,14 +80,8 @@ public class RenderMojo extends AbstractMojo {
 			double height = renderer.getHeight();
 			if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
 			if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
-			createWriter().save( renderer, target, width, height );
+			new RenderedImageWriter().save( renderer, target, width, height );
 		}
-	}
-
-	@SuppressWarnings( "unchecked" )
-	private RenderedImageWriter createWriter() throws Exception {
-		Class<? extends RenderedImageWriter> writerClass = (Class<? extends RenderedImageWriter>)Class.forName( RenderedImageWriter.class.getName(), true, loader );
-		return writerClass.getConstructor().newInstance();
 	}
 
 	private RenderedImage createRenderer( ImageMetadata imageMetadata ) throws Exception {
