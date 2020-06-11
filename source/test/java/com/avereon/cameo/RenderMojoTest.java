@@ -7,7 +7,6 @@ import org.apache.maven.project.MavenProject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +47,6 @@ public class RenderMojoTest {
 
 	@Test
 	void testJpgImage() throws Exception {
-		for( String name : ImageIO.getWriterFileSuffixes() ) {
-			System.out.println( "ImageIO suffix=" + name );
-		}
 		ImageMetadata imageMetadata = getSingleImageMetadata();
 		imageMetadata.setTarget( "target/images/bolt.jpg" );
 		imageMetadata.setFill( "#206080");
