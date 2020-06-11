@@ -18,6 +18,8 @@ public class ImageMetadata {
 
 	private Double offsetY;
 
+	private String fill;
+
 	private String theme;
 
 	public String getImageClass() {
@@ -93,6 +95,14 @@ public class ImageMetadata {
 
 	public void setOffsetY( Double offsetY ) {
 		this.offsetY = offsetY;
+	}
+
+	public String getFill() {
+		return fill;
+	}
+
+	public void setFill( String fill ) {
+		this.fill = fill;
 	}
 
 	public String getTheme() {

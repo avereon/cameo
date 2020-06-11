@@ -1,6 +1,6 @@
 package com.avereon.cameo;
 
-import com.avereon.venza.icon.RenderedIcon;
+import com.avereon.venza.image.RenderedIcon;
 
 public class TestIcon extends RenderedIcon {
 

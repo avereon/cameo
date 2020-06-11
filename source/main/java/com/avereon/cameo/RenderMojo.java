@@ -1,8 +1,9 @@
 package com.avereon.cameo;
 
-import com.avereon.venza.icon.RenderedIcon;
 import com.avereon.venza.image.RenderedImage;
 import com.avereon.venza.image.RenderedImageWriter;
+import com.avereon.venza.image.Theme;
+import javafx.scene.paint.Color;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -18,13 +19,10 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings( "unused" )
 @Mojo( name = "render", defaultPhase = LifecyclePhase.PREPARE_PACKAGE )
 public class RenderMojo extends AbstractMojo {
-
-	private static final Map<String, String> themes;
 
 	@Parameter( readonly = true, defaultValue = "${project}" )
 	private MavenProject project;
@@ -36,10 +34,6 @@ public class RenderMojo extends AbstractMojo {
 	private IconMetadata[] icons;
 
 	ClassLoader loader;
-
-	static {
-		themes = Map.of( "dark", RenderedIcon.DARK_THEME, "light", RenderedIcon.LIGHT_THEME );
-	}
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -66,14 +60,17 @@ public class RenderMojo extends AbstractMojo {
 			Path target = output.resolve( iconMetadata.getTarget() );
 			getLog().info( "Render icon " + target.toAbsolutePath() );
 
+			Color fill = null;
+			if( iconMetadata.getFill() != null ) fill = Color.web( iconMetadata.getFill() );
+
 			// Create the renderers
 			List<RenderedImage> renderers = new ArrayList<>();
 			for( ImageMetadata imageMetadata : iconMetadata.getImages() ) {
-				if( iconMetadata.getTheme() != null ) imageMetadata.setTheme( iconMetadata.getTheme() );
+				if( iconMetadata.getTheme() != null && imageMetadata.getTheme() == null ) imageMetadata.setTheme( iconMetadata.getTheme() );
 				renderers.add( createRenderer( imageMetadata ) );
 			}
 
-			new RenderedImageWriter().save( renderers, target );
+			new RenderedImageWriter().save( renderers, target, fill );
 		}
 	}
 
@@ -86,9 +83,11 @@ public class RenderMojo extends AbstractMojo {
 			RenderedImage renderer = createRenderer( imageMetadata );
 			double width = renderer.getWidth();
 			double height = renderer.getHeight();
+			Color fill = null;
 			if( imageMetadata.getImageWidth() != null ) width = imageMetadata.getImageWidth();
 			if( imageMetadata.getImageHeight() != null ) height = imageMetadata.getImageHeight();
-			new RenderedImageWriter().save( renderer, target, width, height );
+			if( imageMetadata.getFill() != null ) fill = Color.web( imageMetadata.getFill() );
+			new RenderedImageWriter().save( renderer, target, width, height, fill );
 		}
 	}
 
@@ -109,8 +108,8 @@ public class RenderMojo extends AbstractMojo {
 			renderer.relocate( offsetX, offsetY );
 
 			String theme = imageMetadata.getTheme();
-			if( theme == null ) theme = "dark";
-			renderer.setTheme( themes.get( theme.toLowerCase() ) );
+			if( theme == null ) theme = Theme.DARK.name();
+			renderer.setTheme( Theme.valueOf( theme.toUpperCase() ) );
 
 			return renderer;
 		} catch( ClassNotFoundException exception ) {

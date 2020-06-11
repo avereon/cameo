@@ -6,6 +6,8 @@ public class IconMetadata {
 
 	private String target;
 
+	private String fill;
+
 	private String theme;
 
 	public ImageMetadata[] getImages() {
@@ -22,6 +24,14 @@ public class IconMetadata {
 
 	public void setTarget( String target ) {
 		this.target = target;
+	}
+
+	public String getFill() {
+		return fill;
+	}
+
+	public void setFill( String fill ) {
+		this.fill = fill;
 	}
 
 	public String getTheme() {
