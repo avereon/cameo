@@ -47,7 +47,7 @@
 	<properties>
 		<!-- Runtime dependencies -->
 		<!--java.version defined in parent pom -->
-		<javafx.version>13</javafx.version>
+		<openjfx.version>14.0.1</openjfx.version>
 		<slf4j.version>1.8.0-beta4</slf4j.version>
 	</properties>
 
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-swing</artifactId>
-			<version>${javafx.version}</version>
+			<version>${openjfx.version}</version>
 		</dependency>
 
 		<dependency>
