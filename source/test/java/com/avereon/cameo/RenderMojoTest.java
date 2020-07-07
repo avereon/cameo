@@ -59,6 +59,18 @@ public class RenderMojoTest {
 	}
 
 	@Test
+	void testPngImageFromSvgIcon() throws Exception {
+		ImageMetadata imageMetadata = getSvgImageMetadata();
+		imageMetadata.setTarget( "target/images/aid.png" );
+		imageMetadata.setSize( 256 );
+		mojo.setImages( new ImageMetadata[]{ imageMetadata } );
+
+		mojo.execute();
+
+		assertTrue( new File( "target/images/aid.png" ).exists() );
+	}
+
+	@Test
 	void testPngImage() throws Exception {
 		ImageMetadata imageMetadata = getSingleImageMetadata();
 		imageMetadata.setTarget( "target/images/bolt.png" );
@@ -232,6 +244,15 @@ public class RenderMojoTest {
 		}
 	}
 
+	private IconMetadata getSvgIconMetadata() {
+		ImageMetadata imageMetadata = getSvgImageMetadata();
+		imageMetadata.setSize( 64 );
+
+		IconMetadata iconMetadata = new IconMetadata();
+		iconMetadata.setImages( new ImageMetadata[]{ imageMetadata } );
+		return iconMetadata;
+	}
+
 	private IconMetadata getSingleImageIconMetadata() {
 		ImageMetadata imageMetadata = getSingleImageMetadata();
 		imageMetadata.setSize( 64 );
@@ -254,9 +275,15 @@ public class RenderMojoTest {
 		return iconMetadata;
 	}
 
+	private ImageMetadata getSvgImageMetadata() {
+		ImageMetadata imageMetadata = new ImageMetadata();
+		imageMetadata.setClass( TestAidIcon.class.getName() );
+		return imageMetadata;
+	}
+
 	private ImageMetadata getSingleImageMetadata() {
 		ImageMetadata imageMetadata = new ImageMetadata();
-		imageMetadata.setClass( TestIcon.class.getName() );
+		imageMetadata.setClass( TestBoltIcon.class.getName() );
 		return imageMetadata;
 	}
 

@@ -2,7 +2,7 @@ package com.avereon.cameo;
 
 import com.avereon.venza.image.RenderedIcon;
 
-public class TestIcon extends RenderedIcon {
+public class TestBoltIcon extends RenderedIcon {
 
 	@Override
 	protected void render() {
@@ -19,7 +19,7 @@ public class TestIcon extends RenderedIcon {
 	}
 
 	public static void main( String[] args ) {
-		proof( new TestIcon() );
+		proof( new TestBoltIcon() );
 	}
 
 }
