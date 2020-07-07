@@ -2,7 +2,7 @@ package com.avereon.cameo;
 
 import com.avereon.venza.image.RenderedImage;
 import com.avereon.venza.image.RenderedImageWriter;
-import com.avereon.venza.image.Theme;
+import com.avereon.venza.style.Theme;
 import javafx.scene.paint.Color;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
