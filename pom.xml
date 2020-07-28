@@ -47,7 +47,7 @@
 	<properties>
 		<!-- Version numbers updated 02 Jul 2020 -->
 		<!-- Runtime dependencies -->
-		<venza.version>[0.4-SNAPSHOT,)</venza.version>
+		<zerra.version>[0.4-SNAPSHOT,)</zerra.version>
 		<rossa.version>[0.4-SNAPSHOT,)</rossa.version>
 		<image4j.version>0.7.2</image4j.version>
 		<maven.project.version>2.2.1</maven.project.version>
@@ -61,8 +61,8 @@
 
 		<dependency>
 			<groupId>com.avereon</groupId>
-			<artifactId>venza</artifactId>
-			<version>${venza.version}</version>
+			<artifactId>zerra</artifactId>
+			<version>${zerra.version}</version>
 		</dependency>
 
 		<dependency>

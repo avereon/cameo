@@ -1,6 +1,6 @@
 package com.avereon.cameo;
 
-import com.avereon.venza.image.RenderedIcon;
+import com.avereon.zerra.image.RenderedIcon;
 
 public class TestBoltIcon extends RenderedIcon {
 
