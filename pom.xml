@@ -48,7 +48,7 @@
 		<!-- Version numbers updated 02 Jul 2020 -->
 		<!-- Runtime dependencies -->
 		<zerra.version>[0.4-SNAPSHOT,)</zerra.version>
-		<rossa.version>[0.4-SNAPSHOT,)</rossa.version>
+		<zenna.version>[0.4-SNAPSHOT,)</zenna.version>
 		<image4j.version>0.7.2</image4j.version>
 		<maven.project.version>2.2.1</maven.project.version>
 		<maven.plugin.api.version>3.0</maven.plugin.api.version>
@@ -67,8 +67,8 @@
 
 		<dependency>
 			<groupId>com.avereon</groupId>
-			<artifactId>rossa</artifactId>
-			<version>${rossa.version}</version>
+			<artifactId>zenna</artifactId>
+			<version>${zenna.version}</version>
 		</dependency>
 
 		<dependency>
