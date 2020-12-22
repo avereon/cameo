@@ -46,6 +46,11 @@
 
 	<properties>
 		<!-- Version numbers updated 02 Jul 2020 -->
+
+		<!-- Needs to stay at a version compatible with all maven builds -->
+		<!-- Keep consistent with the CI pipeline -->
+		<java.version>11</java.version>
+
 		<!-- Runtime dependencies -->
 		<zerra.version>[0.4-SNAPSHOT,)</zerra.version>
 		<zenna.version>[0.4-SNAPSHOT,)</zenna.version>
