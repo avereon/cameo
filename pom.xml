@@ -52,8 +52,8 @@
 		<java.version>11</java.version>
 
 		<!-- Runtime dependencies -->
-		<zerra.version>0.5</zerra.version>
-		<zenna.version>0.5</zenna.version>
+		<zerra.version>0.7</zerra.version>
+		<zenna.version>0.7</zenna.version>
 		<image4j.version>0.7.2</image4j.version>
 		<maven.project.version>2.2.1</maven.project.version>
 		<maven.plugin.api.version>3.0</maven.plugin.api.version>
