@@ -16,7 +16,7 @@
 			<password>${env.AVN_REPO_PASSWORD}</password>
 		</server>
 		<server>
-			<id>avn</id>
+			<id>avn-mirror</id>
 			<username>${env.AVN_REPO_USERNAME}</username>
 			<password>${env.AVN_REPO_PASSWORD}</password>
 		</server>
