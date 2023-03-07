@@ -2,7 +2,7 @@ package com.avereon.cameo;
 
 import com.avereon.zarra.image.VectorImage;
 import com.avereon.zarra.image.VectorImageWriter;
-import com.avereon.zarra.style.Theme;
+import com.avereon.zarra.style.Motif;
 import javafx.scene.paint.Color;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -108,8 +108,8 @@ public class RenderMojo extends AbstractMojo {
 			renderer.relocate( offsetX, offsetY );
 
 			String theme = imageMetadata.getTheme();
-			if( theme == null ) theme = Theme.DARK.name();
-			renderer.setTheme( Theme.valueOf( theme.toUpperCase() ) );
+			if( theme == null ) theme = Motif.DARK.name();
+			renderer.setTheme( Motif.valueOf( theme.toUpperCase() ) );
 
 			return renderer;
 		} catch( ClassNotFoundException exception ) {
