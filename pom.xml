@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.avereon.pom</groupId>
 		<artifactId>jar</artifactId>
-		<version>3.5.3</version>
+		<version>3.5.4</version>
 		<relativePath/>
 	</parent>
 
@@ -145,6 +145,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
+				<configuration>
+					<goalPrefix>${project.artifactId}</goalPrefix>
+				</configuration>
 				<executions>
 					<execution>
 						<id>default-descriptor</id>
