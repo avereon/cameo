@@ -1,8 +1,8 @@
 package com.avereon.cameo;
 
-import com.avereon.zarra.image.VectorImage;
-import com.avereon.zarra.image.VectorImageWriter;
-import com.avereon.zarra.style.Motif;
+import com.avereon.zerra.image.VectorImage;
+import com.avereon.zerra.image.VectorImageWriter;
+import com.avereon.zerra.style.Motif;
 import javafx.scene.paint.Color;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
