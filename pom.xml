@@ -55,7 +55,7 @@
 		<zenna.version>0.11-SNAPSHOT</zenna.version>
 		<image4j.version>0.7.2</image4j.version>
 		<maven.project.version>2.2.1</maven.project.version>
-		<maven.plugin.api.version>3.9.10</maven.plugin.api.version>
+		<maven.plugin.api.version>3.9.11</maven.plugin.api.version>
 		<maven.plugin.annotations.version>3.15.1</maven.plugin.annotations.version>
 		<openjfx.version>22.0.2</openjfx.version>
 		<slf4j.version>2.0.17</slf4j.version>
